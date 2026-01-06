@@ -1,7 +1,8 @@
 # O-Lang Resolver Test Suite
 
 **Version:** 1.0.0  
-**Author:** Your Name  
+**Maintained by:** O-Lang Core Team  
+**Specification:** O-Lang Resolver Contract v1.x  
 **License:** MIT
 
 ---
