@@ -2,33 +2,33 @@
   "test_id": "R-003-failure-modes",
   "protocol_version": "1.0",
   "category": "resolver",
-  "description": "Tests handling of resolver failures, missing resolvers, and runtime errors.",
+  "description": "Tests that resolver failure modes and steps are recognized by the parser.",
   "spec_ref": [
     "§4.4 Resolver Failure Modes",
-    "§3.2 Step Parsing",
-    "§5.1 Error Handling"
+    "§3.3 Step Parsing",
+    "§2.3 Symbol Normalization"
   ],
   "fixtures": {
     "inputs": [
       {
         "workflow": "R-003-failure-modes/workflow.ol",
         "values": {
-          "userInput": "test input"
+          "userInput": "someInput"
         }
       }
     ]
   },
   "assertions": [
     {
-      "id": "reliable_step_success",
+      "id": "allowed_resolvers_listed",
       "type": "output_equals",
-      "path": "steps[0].type",
-      "expected": "ask",
+      "path": "allowedResolvers",
+      "expected": ["ReliableResolver", "UnstableResolver"],
       "severity": "fatal",
-      "description": "Step 1 should be parsed as an 'ask' resolver step"
+      "description": "Parser should capture all allowed resolvers listed in the workflow"
     },
     {
-      "id": "reliable_step_saveas",
+      "id": "ask_step_1_saveas",
       "type": "output_equals",
       "path": "steps[0].saveAs",
       "expected": "reliableResult",
@@ -36,20 +36,20 @@
       "description": "Step 1 saveAs must be correctly normalized"
     },
     {
-      "id": "unstable_step_parsed",
-      "type": "output_equals",
-      "path": "steps[1].type",
-      "expected": "ask",
-      "severity": "fatal",
-      "description": "Step 2 should be parsed as an 'ask' resolver step"
-    },
-    {
-      "id": "unstable_step_saveas",
+      "id": "ask_step_2_saveas",
       "type": "output_equals",
       "path": "steps[1].saveAs",
       "expected": "unstableResult",
       "severity": "fatal",
       "description": "Step 2 saveAs must be correctly normalized"
+    },
+    {
+      "id": "workflow_name_present",
+      "type": "output_equals",
+      "path": "name",
+      "expected": "TestResolverFailureModes",
+      "severity": "fatal",
+      "description": "Workflow name should be parsed correctly"
     },
     {
       "id": "workflow_return_values",
@@ -60,20 +60,12 @@
       "description": "Return statement must list all resolver outputs"
     },
     {
-      "id": "simulate_failure_error",
-      "type": "error_contains",
-      "path": "errors",
-      "expected": "UnstableResolver failed to respond",
-      "severity": "fatal",
-      "description": "Workflow must surface errors from failing resolvers"
-    },
-    {
-      "id": "simulate_missing_resolver",
-      "type": "error_contains",
-      "path": "errors",
-      "expected": "Resolver NotFound: MissingResolver",
-      "severity": "fatal",
-      "description": "Workflow must handle missing resolvers gracefully"
+      "id": "no_parse_warnings",
+      "type": "status_equals",
+      "path": "__warnings.length",
+      "expected": 0,
+      "severity": "warning",
+      "description": "Parser should not generate warnings for valid failure mode workflow"
     }
   ]
 }

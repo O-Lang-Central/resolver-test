@@ -24,6 +24,8 @@ All tests are **self-contained** in folders `R-001`, `R-002`, `R-003`, etc., eac
 - `README.md` — notes for this suite  
 
 ---
+![O-Lang Resolver Certification](badges/certified.svg)
+
 
 ## Folder Structure
 

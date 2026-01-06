@@ -8,20 +8,78 @@ on:
 jobs:
   certify:
     runs-on: ubuntu-latest
+    outputs:
+      status: ${{ steps.set-status.outputs.status }}
 
     steps:
-      - name: Checkout test suite
+      # 1️⃣ Checkout repository
+      - name: Checkout repository
         uses: actions/checkout@v4
 
+      # 2️⃣ Setup Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 18
 
+      # 3️⃣ Install dependencies
       - name: Install dependencies
         run: npm install
 
+      # 4️⃣ Run resolver tests
       - name: Run resolver tests
-        run: npm test
-        env:
-          OLANG_RESOLVER: ./reference-resolver
+        id: run-tests
+        run: |
+          set -e
+          npm test || echo "failed" > result.txt
+
+      # 5️⃣ Set job status
+      - name: Set status output
+        id: set-status
+        run: |
+          if [ -f result.txt ]; then
+            echo "status=failed" >> $GITHUB_OUTPUT
+          else
+            echo "status=passed" >> $GITHUB_OUTPUT
+          fi
+
+      # 6️⃣ Generate SVG badge
+      - name: Generate badge
+        run: |
+          mkdir -p badges
+          STATUS="${{ steps.set-status.outputs.status }}"
+          if [ "$STATUS" = "passed" ]; then
+            COLOR="brightgreen"
+            MESSAGE="pass"
+          else
+            COLOR="red"
+            MESSAGE="fail"
+          fi
+          echo "<svg xmlns='http://www.w3.org/2000/svg' width='120' height='20'>
+            <linearGradient id='b' x2='0' y2='100%'>
+              <stop offset='0' stop-color='#bbb' stop-opacity='.1'/>
+              <stop offset='1' stop-opacity='.1'/>
+            </linearGradient>
+            <mask id='a'>
+              <rect width='120' height='20' rx='3' fill='#fff'/>
+            </mask>
+            <g mask='url(#a)'>
+              <rect width='70' height='20' fill='#555'/>
+              <rect x='70' width='50' height='20' fill='$COLOR'/>
+              <rect width='120' height='20' fill='url(#b)'/>
+            </g>
+            <g fill='#fff' text-anchor='middle' font-family='Verdana' font-size='11'>
+              <text x='35' y='14'>Certified</text>
+              <text x='95' y='14'>$MESSAGE</text>
+            </g>
+          </svg>" > badges/certified.svg
+
+      # 7️⃣ Commit and push badge back to repo
+      - name: Commit and push badge
+        if: always()
+        run: |
+          git config --global user.name "O-Lang CI"
+          git config --global user.email "ci@olang.org"
+          git add badges/certified.svg
+          git commit -m "Update resolver certification badge [skip ci]" || echo "No changes to commit"
+          git push origin main

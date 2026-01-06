@@ -42,6 +42,14 @@
       "description": "Workflow name should be parsed correctly"
     },
     {
+      "id": "workflow_return_values_empty",
+      "type": "output_equals",
+      "path": "returnValues",
+      "expected": [],
+      "severity": "fatal",
+      "description": "Return statement is empty as per workflow"
+    },
+    {
       "id": "no_parse_warnings",
       "type": "status_equals",
       "path": "__warnings.length",

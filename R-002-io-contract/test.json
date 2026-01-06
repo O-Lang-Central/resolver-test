@@ -20,6 +20,14 @@
   },
   "assertions": [
     {
+      "id": "allowed_resolvers_listed",
+      "type": "output_equals",
+      "path": "allowedResolvers",
+      "expected": ["Calculator", "WeatherService"],
+      "severity": "fatal",
+      "description": "Parser should capture all allowed resolvers listed in the workflow"
+    },
+    {
       "id": "ask_step_parsed",
       "type": "output_equals",
       "path": "steps[0].type",
