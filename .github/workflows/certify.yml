@@ -23,3 +23,5 @@ jobs:
 
       - name: Run resolver tests
         run: npm test
+        env:
+          OLANG_RESOLVER: ./reference-resolver
