@@ -51,7 +51,6 @@ const { runAllTests } = require("./lib/runner");
 
     console.log("✅ All resolver tests passed");
     process.exit(0);
-
   } catch (err) {
     console.error("🔥 Resolver test runner crashed");
     console.error(err);
