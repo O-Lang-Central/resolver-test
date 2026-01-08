@@ -1,6 +1,6 @@
 {
   "test_id": "R-002-io-contract",
-  "protocol_version": "1.0",
+  "protocol_version": "1.1",
   "category": "resolver",
   "description": "Tests that resolver I/O contracts are correctly recognized and saveAs fields are applied.",
   "spec_ref": [
@@ -21,59 +21,56 @@
   "assertions": [
     {
       "id": "allowed_resolvers_listed",
-      "type": "output_equals",
-      "path": "allowedResolvers",
+      "type": "allowed_resolvers_listed",
       "expected": ["Calculator", "WeatherService"],
       "severity": "fatal",
-      "description": "Parser should capture all allowed resolvers listed in the workflow"
+      "description": "Parser must capture all allowed resolvers"
     },
     {
-      "id": "ask_step_parsed",
-      "type": "output_equals",
-      "path": "steps[0].type",
+      "id": "ask_step_type",
+      "type": "step_type",
+      "stepIndex": 0,
       "expected": "ask",
       "severity": "fatal",
-      "description": "Step 1 should be parsed as an 'ask' resolver step"
+      "description": "Step 1 must be parsed as 'ask'"
     },
     {
       "id": "ask_step_saveas",
-      "type": "output_equals",
-      "path": "steps[0].saveAs",
+      "type": "step_saveas",
+      "stepIndex": 0,
       "expected": "calcResult",
       "severity": "fatal",
-      "description": "Step 1 saveAs must be correctly normalized"
+      "description": "Step 1 saveAs must be 'calcResult'"
     },
     {
-      "id": "use_step_parsed",
-      "type": "output_equals",
-      "path": "steps[1].type",
+      "id": "use_step_type",
+      "type": "step_type",
+      "stepIndex": 1,
       "expected": "use",
       "severity": "fatal",
-      "description": "Step 2 should be parsed as a 'use' resolver step"
+      "description": "Step 2 must be parsed as 'use'"
     },
     {
       "id": "use_step_saveas",
-      "type": "output_equals",
-      "path": "steps[1].saveAs",
+      "type": "step_saveas",
+      "stepIndex": 1,
       "expected": "weatherInfo",
       "severity": "fatal",
-      "description": "Step 2 saveAs must be correctly normalized"
+      "description": "Step 2 saveAs must be 'weatherInfo'"
     },
     {
       "id": "workflow_return_values",
-      "type": "output_equals",
-      "path": "returnValues",
+      "type": "workflow_return_values",
       "expected": ["calcResult", "weatherInfo"],
       "severity": "fatal",
-      "description": "Return statement must list all resolver outputs"
+      "description": "Return statement must list all saved outputs"
     },
     {
       "id": "no_parse_warnings",
-      "type": "status_equals",
-      "path": "__warnings.length",
+      "type": "no_parse_warnings",
       "expected": 0,
       "severity": "warning",
-      "description": "Parser should not generate warnings for valid I/O contracts"
+      "description": "No warnings for valid I/O contracts"
     }
   ]
 }

@@ -1,8 +1,8 @@
 {
   "test_id": "R-001-allowlist",
-  "protocol_version": "1.0",
+  "protocol_version": "1.1",
   "category": "resolver",
-  "description": "Tests that the parser correctly captures allowed resolvers and normalizes their names.",
+  "description": "Tests that the parser correctly captures and normalizes allowed resolvers.",
   "spec_ref": [
     "§4.2 Allowed Resolvers",
     "§3.1 Workflow Parsing",
@@ -19,43 +19,37 @@
   "assertions": [
     {
       "id": "allowed_resolvers_listed",
-      "type": "output_equals",
-      "path": "allowedResolvers",
+      "type": "allowed_resolvers_listed",
       "expected": ["SimpleResolver", "AdvancedResolver"],
       "severity": "fatal",
-      "description": "Parser should capture all allowed resolvers listed in the workflow"
+      "description": "Parser must capture all allowed resolvers"
     },
     {
-      "id": "allowed_resolvers_normalized",
-      "type": "output_equals",
-      "path": "allowedResolvers",
-      "expected": ["SimpleResolver", "AdvancedResolver"],
+      "id": "resolver_names_normalized",
+      "type": "resolver_names_normalized",
       "severity": "fatal",
-      "description": "Resolver names should be normalized (no spaces or invalid characters)"
+      "description": "All resolver names must conform to symbol normalization rules (start with letter, alphanumeric only)"
     },
     {
       "id": "workflow_name_present",
-      "type": "output_equals",
-      "path": "name",
+      "type": "workflow_name_present",
       "expected": "TestResolverAllowlist",
       "severity": "fatal",
-      "description": "Workflow name should be parsed correctly"
+      "description": "Workflow name must be parsed correctly"
     },
     {
       "id": "workflow_return_values_empty",
-      "type": "output_equals",
-      "path": "returnValues",
+      "type": "workflow_return_values_empty",
       "expected": [],
       "severity": "fatal",
-      "description": "Return statement is empty as per workflow"
+      "description": "Return values must be empty as per workflow"
     },
     {
       "id": "no_parse_warnings",
-      "type": "status_equals",
-      "path": "__warnings.length",
+      "type": "no_parse_warnings",
       "expected": 0,
       "severity": "warning",
-      "description": "Parser should not generate warnings for a valid allowed resolvers list"
+      "description": "No warnings should be issued for valid syntax"
     }
   ]
 }

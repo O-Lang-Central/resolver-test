@@ -1,0 +1,60 @@
+{
+  "test_id": "R-005-resolver-metadata-contract",
+  "protocol_version": "1.1",
+  "category": "resolver",
+  "description": "Tests that resolver metadata (inputs, outputs, name) is valid and complete.",
+  "spec_ref": [
+    "§4.3 Resolver Input/Output Contracts",
+    "§4.4 Resolver Failure Modes",
+    "§2.3 Symbol Normalization"
+  ],
+  "fixtures": {
+    "inputs": [
+      {
+        "resolver_contract": "R-005-resolver-metadata-contract/resolver.ol"
+      }
+    ]
+  },
+  "assertions": [
+    {
+      "id": "resolver_has_name",
+      "type": "resolver_has_field",
+      "field": "resolverName",
+      "expected": "RiskAssessment",
+      "severity": "fatal",
+      "description": "Resolver must declare resolverName"
+    },
+    {
+      "id": "resolver_inputs_valid",
+      "type": "resolver_inputs_valid",
+      "severity": "fatal",
+      "description": "Inputs must be array of {name, type, required}"
+    },
+    {
+      "id": "resolver_outputs_valid",
+      "type": "resolver_outputs_valid",
+      "severity": "fatal",
+      "description": "Outputs must be array of {name, type}"
+    },
+    {
+      "id": "resolver_input_names_normalized",
+      "type": "field_names_normalized",
+      "field": "inputs",
+      "severity": "fatal",
+      "description": "Input names must follow symbol normalization"
+    },
+    {
+      "id": "resolver_output_names_normalized",
+      "type": "field_names_normalized",
+      "field": "outputs",
+      "severity": "fatal",
+      "description": "Output names must follow symbol normalization"
+    },
+    {
+      "id": "resolver_failures_declared",
+      "type": "resolver_failures_valid",
+      "severity": "warning",
+      "description": "Failure modes should be declared for production resolvers"
+    }
+  ]
+}

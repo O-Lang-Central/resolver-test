@@ -1,0 +1,57 @@
+{
+  "test_id": "R-004-invalid-syntax",
+  "protocol_version": "1.1",
+  "category": "resolver",
+  "description": "Tests that parser emits warnings or errors for invalid syntax.",
+  "spec_ref": [
+    "§2.3 Symbol Normalization",
+    "§3.1 Workflow Parsing",
+    "§4.2 Allowed Resolvers"
+  ],
+  "fixtures": {
+    "inputs": [
+      {
+        "workflow": "R-004-invalid-syntax/workflow.ol",
+        "values": {}
+      }
+    ]
+  },
+  "assertions": [
+    {
+      "id": "warns_on_invalid_resolver_name",
+      "type": "contains_warning",
+      "expected_substring": "invalid resolver name",
+      "severity": "fatal",
+      "description": "Must warn about resolver name with space"
+    },
+    {
+      "id": "warns_on_invalid_saveas",
+      "type": "contains_warning",
+      "expected_substring": "invalid identifier",
+      "severity": "fatal",
+      "description": "Must warn about malformed Save as"
+    },
+    {
+      "id": "warns_on_unrecognized_step",
+      "type": "contains_warning",
+      "expected_substring": "unrecognized step",
+      "severity": "fatal",
+      "description": "Must warn about unknown step type"
+    },
+    {
+      "id": "warns_on_duplicate_saveas",
+      "type": "contains_warning",
+      "expected_substring": "duplicate saveAs",
+      "severity": "fatal",
+      "description": "Must warn about duplicate Save as names"
+    },
+    {
+      "id": "parse_status_has_warnings",
+      "type": "status_greater_than",
+      "path": "__warnings.length",
+      "expected": 0,
+      "severity": "fatal",
+      "description": "Parser must emit at least one warning"
+    }
+  ]
+}
