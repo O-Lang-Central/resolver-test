@@ -5,7 +5,11 @@
   "main": "run.js",
   "type": "commonjs",
   "scripts": {
-    "test": "node run.js"
+    "test": "node run.js",
+    "test:kernel": "node run-kernel.js",
+    "test:kernel:json": "node run-kernel.js --json",
+    "test:kernel:badge": "node run-kernel.js --badge",
+    "test:kernel:all": "node run-kernel.js --json --badge"
   },
   "bin": {
     "olang-resolver-test": "run.js"

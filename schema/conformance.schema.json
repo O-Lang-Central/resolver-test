@@ -1,0 +1,31 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "O-lang Resolver Conformance Report",
+  "type": "object",
+  "required": ["resolver", "timestamp", "results"],
+  "properties": {
+    "resolver": {
+      "type": "string",
+      "description": "Resolver name or package identifier"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "results": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["suite", "status"],
+        "properties": {
+          "suite": { "type": "string" },
+          "status": { "type": "string", "enum": ["pass", "fail"] },
+          "failures": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        }
+      }
+    }
+  }
+}

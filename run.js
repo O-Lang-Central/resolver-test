@@ -3,6 +3,9 @@
 const path = require("path");
 const fs = require("fs");
 
+// ----------------------
+// Load resolver from env
+// ----------------------
 let resolverPath = process.env.OLANG_RESOLVER;
 
 if (!resolverPath) {
@@ -30,27 +33,99 @@ try {
   process.exit(1);
 }
 
-// Import runner
-const { runAllTests } = require("./lib/runner");
+// ----------------------
+// CLI arg parsing
+// ----------------------
+function parseArgs() {
+  const args = process.argv.slice(2);
+  const opts = {
+    suites: [],
+    json: false
+  };
 
+  for (let i = 0; i < args.length; i++) {
+    if (args[i] === "--suite" && args[i + 1]) {
+      opts.suites.push(args[++i]);
+    }
+    if (args[i] === "--json") {
+      opts.json = true;
+    }
+  }
+
+  return opts;
+}
+
+// ----------------------
+// Imports
+// ----------------------
+const { runAllTests } = require("./lib/runner");
+const { generateBadge } = require("./lib/badge");
+
+// ----------------------
+// Main
+// ----------------------
 (async () => {
   try {
+    const opts = parseArgs();
+
+    const suites =
+      opts.suites.length > 0
+        ? opts.suites
+        : [
+            "R-001-allowlist",
+            "R-002-io-contract",
+            "R-003-failure-modes",
+            "R-004-invalid-syntax",
+            "R-005-resolver-metadata-contract"
+          ];
+
     const result = await runAllTests({
-      suites: [
-        "R-001-allowlist",
-        "R-002-io-contract",
-        "R-003-failure-modes"
-      ],
+      suites,
       resolver
     });
 
+    // ----------------------
+    // Generate conformance report
+    // ----------------------
+    const conformanceReport = {
+      resolver: resolver?.resolverName || "unknown",
+      timestamp: new Date().toISOString(),
+      results: suites.map(suite => ({
+        suite,
+        status: result.failed > 0 ? "fail" : "pass"
+      }))
+    };
+
+    fs.writeFileSync(
+      path.join(process.cwd(), "conformance.json"),
+      JSON.stringify(conformanceReport, null, 2)
+    );
+
+    // ----------------------
+    // Generate certification badge
+    // ----------------------
+    generateBadge({
+      passed: result.failed === 0,
+      outputDir: process.cwd()
+    });
+
+    // ----------------------
+    // Output handling
+    // ----------------------
+    if (opts.json) {
+      console.log(JSON.stringify(result, null, 2));
+    }
+
     if (result.failed > 0) {
-      console.error(`❌ ${result.failed} resolver tests failed`);
+      console.error(`❌ ${result.failed} resolver test(s) failed`);
+      console.error("❌ Resolver is NOT certified");
       process.exit(1);
     }
 
     console.log("✅ All resolver tests passed");
+    console.log("🏅 Resolver is O-lang CERTIFIED");
     process.exit(0);
+
   } catch (err) {
     console.error("🔥 Resolver test runner crashed");
     console.error(err);
