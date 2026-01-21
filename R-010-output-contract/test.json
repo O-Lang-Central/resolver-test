@@ -1,0 +1,28 @@
+{
+  "test_id": "R-010-output-contract",
+  "protocol_version": "1.1",
+  "category": "resolver-runtime",
+  "description": "Ensures resolver output conforms to its declared output contract.",
+  "spec_ref": ["§4.3 Resolver Output Contracts"],
+  "fixtures": {
+    "inputs": [
+      {
+        "invoke": {}
+      }
+    ]
+  },
+  "assertions": [
+    {
+      "id": "output_is_object",
+      "type": "output_is_object",
+      "severity": "fatal",
+      "description": "Resolver must return an object"
+    },
+    {
+      "id": "output_fields_match_contract",
+      "type": "output_fields_match_contract",
+      "severity": "fatal",
+      "description": "Returned object must contain all fields declared in outputs[]"
+    }
+  ]
+}

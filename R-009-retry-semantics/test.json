@@ -1,0 +1,22 @@
+{
+  "test_id": "R-009-retry-semantics",
+  "protocol_version": "1.1",
+  "category": "resolver-runtime",
+  "description": "Ensures resolver retry behavior does not exceed declared retry limits when failures occur.",
+  "spec_ref": ["§4.4 Resolver Failure Modes"],
+  "fixtures": {
+    "inputs": [
+      {
+        "invoke": {}
+      }
+    ]
+  },
+  "assertions": [
+    {
+      "id": "retry_limit_respected",
+      "type": "retry_count_within_declared_limit",
+      "severity": "fatal",
+      "description": "Resolver must not retry more times than declared in its failure specification"
+    }
+  ]
+}

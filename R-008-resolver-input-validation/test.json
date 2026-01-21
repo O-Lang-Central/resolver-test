@@ -1,0 +1,22 @@
+{
+  "test_id": "R-008-input-validation",
+  "protocol_version": "1.1",
+  "category": "resolver-runtime",
+  "description": "Ensures resolver rejects invocations missing required inputs.",
+  "spec_ref": ["§4.2 Resolver Input Contracts"],
+  "fixtures": {
+    "inputs": [
+      {
+        "invoke": {}
+      }
+    ]
+  },
+  "assertions": [
+    {
+      "id": "missing_required_input_rejected",
+      "type": "rejects_missing_required_input",
+      "severity": "fatal",
+      "description": "Resolver must fail when a required input is omitted"
+    }
+  ]
+}

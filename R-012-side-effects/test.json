@@ -1,0 +1,23 @@
+{
+  "test_id": "R-012-side-effects",
+  "protocol_version": "1.1",
+  "category": "resolver-runtime",
+  "description": "Ensures resolver does not mutate global state or environment unexpectedly.",
+  "spec_ref": ["§5.3 Resolver Isolation"],
+  "fixtures": {
+    "inputs": [
+      {
+        "invoke": {}
+      }
+    ]
+  },
+  "assertions": [
+    {
+      "id": "no_global_mutation",
+      "type": "no_global_state_mutation",
+      "severity": "warning",
+      "description": "Resolver should not mutate global objects, process.env, or module-level state"
+    }
+  ]
+}
+

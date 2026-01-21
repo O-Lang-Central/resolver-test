@@ -1,0 +1,22 @@
+{
+  "test_id": "R-006-runtime-shape",
+  "protocol_version": "1.1",
+  "category": "resolver-runtime",
+  "description": "Ensures resolver exports a callable function.",
+  "spec_ref": ["§4.1 Resolver Runtime Interface"],
+  "fixtures": {
+    "inputs": [
+      {
+        "invoke": {}
+      }
+    ]
+  },
+  "assertions": [
+    {
+      "id": "resolver_is_function",
+      "type": "resolver_is_callable",
+      "severity": "fatal",
+      "description": "Resolver must be a callable function"
+    }
+  ]
+}

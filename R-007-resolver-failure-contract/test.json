@@ -1,0 +1,22 @@
+{
+  "test_id": "R-007-failure-contract",
+  "protocol_version": "1.1",
+  "category": "resolver-runtime",
+  "description": "Ensures any thrown failure code is declared in the resolver's failure contract.",
+  "spec_ref": ["§4.4 Resolver Failure Modes"],
+  "fixtures": {
+    "inputs": [
+      {
+        "invoke": {}
+      }
+    ]
+  },
+  "assertions": [
+    {
+      "id": "failure_code_declared",
+      "type": "resolver_failure_declared",
+      "severity": "fatal",
+      "description": "Any error code thrown by the resolver must be listed in its failures[] declaration"
+    }
+  ]
+}
