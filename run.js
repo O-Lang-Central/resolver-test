@@ -73,13 +73,13 @@ const { generateBadge } = require("./lib/badge");
         ? opts.suites
         : [
         "R-005-resolver-metadata-contract",
-        "R-006-runtime-shape",
-        "R-007-failure-contract",
-        "R-008-input-validation",
-        "R-009-retry-semantics",
-        "R-010-output-contract",
-        "R-011-determinism",
-        "R-012-side-effects"
+        "R-006-resolver-runtime-shape",
+        "R-007-resolver-failure-contract",
+        "R-008-resolver-input-validation",
+        "R-009-resolver-retry-semantics",
+        "R-010-resolver-output-contract",
+        "R-011-resolver-determinism",
+        "R-012-resolver-side-effects"
           ];
 
     const result = await runAllTests({

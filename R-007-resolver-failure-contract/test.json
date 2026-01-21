@@ -1,5 +1,5 @@
 {
-  "test_id": "R-007-failure-contract",
+  "test_id": "R-007-resolver-failure-contract",
   "protocol_version": "1.1",
   "category": "resolver-runtime",
   "description": "Ensures any thrown failure code is declared in the resolver's failure contract.",

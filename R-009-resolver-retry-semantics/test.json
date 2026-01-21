@@ -1,5 +1,5 @@
 {
-  "test_id": "R-009-retry-semantics",
+  "test_id": "R-009-resolver-retry-semantics",
   "protocol_version": "1.1",
   "category": "resolver-runtime",
   "description": "Ensures resolver retry behavior does not exceed declared retry limits when failures occur.",

@@ -1,5 +1,5 @@
 {
-  "test_id": "R-012-side-effects",
+  "test_id": "R-012-resolver-side-effects",
   "protocol_version": "1.1",
   "category": "resolver-runtime",
   "description": "Ensures resolver does not mutate global state or environment unexpectedly.",

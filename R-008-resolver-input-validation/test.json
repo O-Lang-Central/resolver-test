@@ -1,5 +1,5 @@
 {
-  "test_id": "R-008-input-validation",
+  "test_id": "R-008-resolver-input-validation",
   "protocol_version": "1.1",
   "category": "resolver-runtime",
   "description": "Ensures resolver rejects invocations missing required inputs.",

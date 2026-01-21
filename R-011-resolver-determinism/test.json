@@ -1,5 +1,5 @@
 {
-  "test_id": "R-011-determinism",
+  "test_id": "R-011-resolver-determinism",
   "protocol_version": "1.1",
   "category": "resolver-runtime",
   "description": "Ensures resolver produces deterministic output for identical inputs.",

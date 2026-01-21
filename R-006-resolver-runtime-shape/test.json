@@ -1,5 +1,5 @@
 {
-  "test_id": "R-006-runtime-shape",
+  "test_id": "R-006-resolver-runtime-shape",
   "protocol_version": "1.1",
   "category": "resolver-runtime",
   "description": "Ensures resolver exports a callable function.",
