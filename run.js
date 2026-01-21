@@ -72,10 +72,14 @@ const { generateBadge } = require("./lib/badge");
       opts.suites.length > 0
         ? opts.suites
         : [
-            "R-001-allowlist",
-            "R-002-io-contract",
-            "R-003-failure-modes",
-            "R-005-resolver-metadata-contract"
+        "R-005-resolver-metadata-contract",
+        "R-006-runtime-shape",
+        "R-007-failure-contract",
+        "R-008-input-validation",
+        "R-009-retry-semantics",
+        "R-010-output-contract",
+        "R-011-determinism",
+        "R-012-side-effects"
           ];
 
     const result = await runAllTests({
