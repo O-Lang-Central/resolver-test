@@ -7,9 +7,7 @@
   "fixtures": {
     "inputs": [
       {
-        "invoke": {
-          "action": "Notify -123456789 \"Hello from O-Lang\" using notify-telegram"
-        }
+        "invoke": "__USE_RESOLVER_EXAMPLE_ACTION__"
       }
     ]
   },
